@@ -1,1 +1,1 @@
-{"root":["./src/env.d.ts","./src/main.ts","./src/app.vue","./vite.config.ts","./vitest.config.ts"],"version":"5.6.3"}
+{"root":["./src/env.d.ts","./src/main.ts","./src/store/treestore.ts","./src/types/index.ts","./src/app.vue","./vite.config.ts","./vitest.config.ts"],"version":"5.6.3"}
