@@ -22,6 +22,10 @@ function buildItemPath(itemId: TreeItemId): (string | number)[] {
 const rowData = computed(() => {
   return store.value.getAll().map(item => ({
     ...item,
+    _rawId: item.id,
+    _rawParent: item.parent,
+    id: String(item.id),
+    parent: item.parent != null ? String(item.parent) : null,
     treePath: buildItemPath(item.id),
   }))
 })
@@ -40,9 +44,10 @@ const columnDefs = computed(() => [
   },
   {
     headerName: 'Категория',
-    valueGetter: (p: { data: TreeItem | null }) => {
+    valueGetter: (p: { data: Record<string, unknown> | null }) => {
       if (!p.data) return ''
-      return store.value.getChildren(p.data.id).length > 0
+      const rawId = p.data._rawId as TreeItemId
+      return store.value.getChildren(rawId).length > 0
         ? 'Группа'
         : 'Элемент'
     },
@@ -52,12 +57,14 @@ const columnDefs = computed(() => [
   },
   {
     headerName: 'ID',
-    valueGetter: (p: { data: TreeItem | null }) => p.data?.id,
+    valueGetter: (p: { data: Record<string, unknown> | null }) =>
+      p.data?.id as string | undefined,
     width: 140,
   },
   {
     headerName: 'Parent',
-    valueGetter: (p: { data: TreeItem | null }) => p.data?.parent ?? '',
+    valueGetter: (p: { data: Record<string, unknown> | null }) =>
+      p.data?.parent as string | null | undefined ?? '',
     width: 140,
   },
 ])
@@ -66,8 +73,10 @@ const autoGroupColumnDef = {
   headerName: 'Элемент',
   cellRendererParams: {
     suppressCount: true,
-    innerRenderer: (p: { data: TreeItem | null; value: string | number }) =>
-      p.data?.label ?? p.data?.id ?? p.value,
+    innerRenderer: (p: { data: Record<string, unknown> | null; value: string | number }) =>
+      (p.data?.label as string | undefined)
+        ?? (p.data?._rawId as string | number | undefined)
+        ?? p.value,
   },
 }
 
