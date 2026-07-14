@@ -48,7 +48,6 @@ describe('TreeTable', () => {
     const wrapper = mount(TreeTable, {
       props: { items: testItems },
     })
-    // AG Grid renders a .ag-root DOM element inside
     expect(wrapper.find('.ag-root').exists()).toBe(true)
   })
 
@@ -62,27 +61,37 @@ describe('TreeTable', () => {
     expect(headerTexts).toContain('Категория')
     expect(headerTexts).toContain('ID')
     expect(headerTexts).toContain('Parent')
+    expect(headerTexts).toContain('Действия')
   })
 
   it('should render correct number of rows', () => {
     const wrapper = mount(TreeTable, {
       props: { items: testItems },
     })
-    // With tree data, AG Grid creates virtual group rows
     const rows = wrapper.findAll('.ag-row')
     expect(rows.length).toBeGreaterThanOrEqual(3)
   })
 
-  it('should display Категория values', () => {
+  it('should display Категория values (Группа / Элемент)', () => {
     const wrapper = mount(TreeTable, {
       props: { items: testItems },
     })
-    const categoryCells = wrapper.findAll(
-      '.ag-cell[col-id="Категория"], .ag-cell-value'
-    )
-    const categoryTexts = categoryCells
-      .map(el => el.text())
-      .filter(t => t === 'Группа' || t === 'Элемент')
-    expect(categoryTexts.length).toBeGreaterThan(0)
+    const categoryCells = wrapper.findAll('.ag-cell[col-id="_category"]')
+    const categoryTexts = categoryCells.map(el => el.text())
+    expect(
+      categoryTexts.filter(t => t === 'Группа' || t === 'Элемент').length,
+    ).toBeGreaterThan(0)
+  })
+
+  it('should toggle add form on button click', async () => {
+    const wrapper = mount(TreeTable, {
+      props: { items: testItems },
+    })
+    expect(wrapper.find('.form-panel').exists()).toBe(false)
+
+    await wrapper.find('.toolbar .btn').trigger('click')
+
+    expect(wrapper.find('.form-panel').exists()).toBe(true)
+    expect(wrapper.find('.form-panel input').exists()).toBe(true)
   })
 })

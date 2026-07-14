@@ -58,6 +58,28 @@ describe('TreeStore', () => {
     })
   })
 
+  describe('hasChildren()', () => {
+    it('should return true for root with children', () => {
+      expect(store.hasChildren(1)).toBe(true)
+    })
+
+    it('should return true for intermediate node', () => {
+      expect(store.hasChildren('91064cee')).toBe(true)
+    })
+
+    it('should return true for deeper node with children', () => {
+      expect(store.hasChildren(4)).toBe(true)
+    })
+
+    it('should return false for leaf node', () => {
+      expect(store.hasChildren(7)).toBe(false)
+    })
+
+    it('should return false for non-existing id', () => {
+      expect(store.hasChildren(999)).toBe(false)
+    })
+  })
+
   describe('getChildren()', () => {
     it('should return direct children of root item', () => {
       const children = store.getChildren(1)

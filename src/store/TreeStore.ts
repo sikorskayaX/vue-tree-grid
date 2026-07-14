@@ -30,6 +30,11 @@ export class TreeStore {
     return this.itemsMap.get(id)
   }
 
+  hasChildren(id: TreeItemId): boolean {
+    const childrenIds = this.childrenMap.get(id)
+    return !!childrenIds && childrenIds.length > 0
+  }
+
   getChildren(id: TreeItemId): TreeItem[] {
     const childrenIds = this.childrenMap.get(id)
     if (!childrenIds) return []
