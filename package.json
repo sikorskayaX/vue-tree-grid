@@ -1,0 +1,29 @@
+{
+  "name": "vue-tree-grid",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "ag-grid-community": "^32.0.0",
+    "ag-grid-enterprise": "^32.0.0",
+    "ag-grid-vue3": "^32.0.0",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "@vitejs/plugin-vue": "^5.1.0",
+    "@vue/test-utils": "^2.4.0",
+    "jsdom": "^25.0.0",
+    "typescript": "~5.6.0",
+    "vite": "^5.4.0",
+    "vitest": "^2.1.0",
+    "vue-tsc": "^2.1.0"
+  }
+}
