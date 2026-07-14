@@ -60,7 +60,7 @@ describe('TreeTable', () => {
     expect(headerTexts).toContain('№ п/п')
     expect(headerTexts).toContain('Категория')
     expect(headerTexts).toContain('ID')
-    expect(headerTexts).toContain('Parent')
+    expect(headerTexts).toContain('Родитель')
     expect(headerTexts).toContain('Действия')
   })
 
